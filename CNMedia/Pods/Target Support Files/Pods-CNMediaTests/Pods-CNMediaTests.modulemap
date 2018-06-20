@@ -1,0 +1,6 @@
+framework module Pods_CNMediaTests {
+  umbrella header "Pods-CNMediaTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

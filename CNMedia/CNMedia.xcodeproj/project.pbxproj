@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0873D21320DA55A0001AABF6 /* Media.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0873D21020DA55A0001AABF6 /* Media.xcassets */; };
+		0873D21420DA55A0001AABF6 /* CNNetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873D21120DA55A0001AABF6 /* CNNetworkReachabilityManager.swift */; };
+		0873D21520DA55A0001AABF6 /* UIIViewExtent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873D21220DA55A0001AABF6 /* UIIViewExtent.swift */; };
+		0873D21720DA55A7001AABF6 /* CNConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0873D21620DA55A7001AABF6 /* CNConstant.swift */; };
 		317C925620DA531A00068FD5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C925520DA531A00068FD5 /* AppDelegate.swift */; };
 		317C925820DA531A00068FD5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C925720DA531A00068FD5 /* ViewController.swift */; };
 		317C925B20DA531A00068FD5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317C925920DA531A00068FD5 /* Main.storyboard */; };
@@ -14,6 +18,8 @@
 		317C926020DA531A00068FD5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 317C925E20DA531A00068FD5 /* LaunchScreen.storyboard */; };
 		317C926B20DA531A00068FD5 /* CNMediaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C926A20DA531A00068FD5 /* CNMediaTests.swift */; };
 		317C927620DA531B00068FD5 /* CNMediaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 317C927520DA531B00068FD5 /* CNMediaUITests.swift */; };
+		5BA3F783979A0065542EC3BD /* Pods_CNMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1FE6E0A14F58AB16AA189799 /* Pods_CNMedia.framework */; };
+		93225BFD0B7D872DAAE3EAC7 /* Pods_CNMediaTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B1349FB74A8F208A1504F172 /* Pods_CNMediaTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,6 +40,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0873D21020DA55A0001AABF6 /* Media.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Media.xcassets; sourceTree = "<group>"; };
+		0873D21120DA55A0001AABF6 /* CNNetworkReachabilityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CNNetworkReachabilityManager.swift; sourceTree = "<group>"; };
+		0873D21220DA55A0001AABF6 /* UIIViewExtent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIIViewExtent.swift; sourceTree = "<group>"; };
+		0873D21620DA55A7001AABF6 /* CNConstant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CNConstant.swift; sourceTree = "<group>"; };
+		0873D21820DA55BE001AABF6 /* CNMedia-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CNMedia-Bridging-Header.h"; sourceTree = "<group>"; };
+		1FE6E0A14F58AB16AA189799 /* Pods_CNMedia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CNMedia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E2B87D2B7E5128CE2B52346 /* Pods-CNMediaTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CNMediaTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CNMediaTests/Pods-CNMediaTests.release.xcconfig"; sourceTree = "<group>"; };
 		317C925220DA531A00068FD5 /* CNMedia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CNMedia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		317C925520DA531A00068FD5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		317C925720DA531A00068FD5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -47,6 +60,10 @@
 		317C927120DA531B00068FD5 /* CNMediaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CNMediaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		317C927520DA531B00068FD5 /* CNMediaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNMediaUITests.swift; sourceTree = "<group>"; };
 		317C927720DA531B00068FD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		394D0372C4F05A8F6DB1D415 /* Pods-CNMedia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CNMedia.release.xcconfig"; path = "Pods/Target Support Files/Pods-CNMedia/Pods-CNMedia.release.xcconfig"; sourceTree = "<group>"; };
+		406EEE82FFBF6332C3E6C275 /* Pods-CNMediaTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CNMediaTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CNMediaTests/Pods-CNMediaTests.debug.xcconfig"; sourceTree = "<group>"; };
+		B1349FB74A8F208A1504F172 /* Pods_CNMediaTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CNMediaTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DC006EC6112ABB0053A97C26 /* Pods-CNMedia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CNMedia.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CNMedia/Pods-CNMedia.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA3F783979A0065542EC3BD /* Pods_CNMedia.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +79,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93225BFD0B7D872DAAE3EAC7 /* Pods_CNMediaTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -74,6 +93,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0873D20F20DA55A0001AABF6 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				0873D21020DA55A0001AABF6 /* Media.xcassets */,
+				0873D21120DA55A0001AABF6 /* CNNetworkReachabilityManager.swift */,
+				0873D21220DA55A0001AABF6 /* UIIViewExtent.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		269CBD42AB95C9F3B747BB5C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1FE6E0A14F58AB16AA189799 /* Pods_CNMedia.framework */,
+				B1349FB74A8F208A1504F172 /* Pods_CNMediaTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		317C924920DA531A00068FD5 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +119,8 @@
 				317C926920DA531A00068FD5 /* CNMediaTests */,
 				317C927420DA531B00068FD5 /* CNMediaUITests */,
 				317C925320DA531A00068FD5 /* Products */,
+				ABF33B5CD36F1DE73AF9B4CB /* Pods */,
+				269CBD42AB95C9F3B747BB5C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,12 +137,15 @@
 		317C925420DA531A00068FD5 /* CNMedia */ = {
 			isa = PBXGroup;
 			children = (
+				0873D20F20DA55A0001AABF6 /* Player */,
 				317C925520DA531A00068FD5 /* AppDelegate.swift */,
 				317C925720DA531A00068FD5 /* ViewController.swift */,
 				317C925920DA531A00068FD5 /* Main.storyboard */,
 				317C925C20DA531A00068FD5 /* Assets.xcassets */,
 				317C925E20DA531A00068FD5 /* LaunchScreen.storyboard */,
 				317C926120DA531A00068FD5 /* Info.plist */,
+				0873D21620DA55A7001AABF6 /* CNConstant.swift */,
+				0873D21820DA55BE001AABF6 /* CNMedia-Bridging-Header.h */,
 			);
 			path = CNMedia;
 			sourceTree = "<group>";
@@ -125,6 +168,17 @@
 			path = CNMediaUITests;
 			sourceTree = "<group>";
 		};
+		ABF33B5CD36F1DE73AF9B4CB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DC006EC6112ABB0053A97C26 /* Pods-CNMedia.debug.xcconfig */,
+				394D0372C4F05A8F6DB1D415 /* Pods-CNMedia.release.xcconfig */,
+				406EEE82FFBF6332C3E6C275 /* Pods-CNMediaTests.debug.xcconfig */,
+				2E2B87D2B7E5128CE2B52346 /* Pods-CNMediaTests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +186,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 317C927A20DA531B00068FD5 /* Build configuration list for PBXNativeTarget "CNMedia" */;
 			buildPhases = (
+				81B682C9571789B2E6AF2831 /* [CP] Check Pods Manifest.lock */,
 				317C924E20DA531A00068FD5 /* Sources */,
 				317C924F20DA531A00068FD5 /* Frameworks */,
 				317C925020DA531A00068FD5 /* Resources */,
+				8434E8E9A7C28B5342BF72BC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -149,6 +205,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 317C927D20DA531B00068FD5 /* Build configuration list for PBXNativeTarget "CNMediaTests" */;
 			buildPhases = (
+				388550BD3A52B38B195145EC /* [CP] Check Pods Manifest.lock */,
 				317C926220DA531A00068FD5 /* Sources */,
 				317C926320DA531A00068FD5 /* Frameworks */,
 				317C926420DA531A00068FD5 /* Resources */,
@@ -193,6 +250,7 @@
 				TargetAttributes = {
 					317C925120DA531A00068FD5 = {
 						CreatedOnToolsVersion = 9.4;
+						LastSwiftMigration = 0940;
 					};
 					317C926520DA531A00068FD5 = {
 						CreatedOnToolsVersion = 9.4;
@@ -231,6 +289,7 @@
 			files = (
 				317C926020DA531A00068FD5 /* LaunchScreen.storyboard in Resources */,
 				317C925D20DA531A00068FD5 /* Assets.xcassets in Resources */,
+				0873D21320DA55A0001AABF6 /* Media.xcassets in Resources */,
 				317C925B20DA531A00068FD5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -251,13 +310,75 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		388550BD3A52B38B195145EC /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CNMediaTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		81B682C9571789B2E6AF2831 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CNMedia-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8434E8E9A7C28B5342BF72BC /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-CNMedia/Pods-CNMedia-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-CNMedia/Pods-CNMedia-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		317C924E20DA531A00068FD5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0873D21520DA55A0001AABF6 /* UIIViewExtent.swift in Sources */,
+				0873D21420DA55A0001AABF6 /* CNNetworkReachabilityManager.swift in Sources */,
 				317C925820DA531A00068FD5 /* ViewController.swift in Sources */,
 				317C925620DA531A00068FD5 /* AppDelegate.swift in Sources */,
+				0873D21720DA55A7001AABF6 /* CNConstant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,8 +549,10 @@
 		};
 		317C927B20DA531B00068FD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DC006EC6112ABB0053A97C26 /* Pods-CNMedia.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HNC3UFD9M5;
 				INFOPLIST_FILE = CNMedia/Info.plist;
@@ -440,6 +563,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cnsue.CNMedia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CNMedia/CNMedia-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -447,8 +572,10 @@
 		};
 		317C927C20DA531B00068FD5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 394D0372C4F05A8F6DB1D415 /* Pods-CNMedia.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = HNC3UFD9M5;
 				INFOPLIST_FILE = CNMedia/Info.plist;
@@ -459,6 +586,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = cnsue.CNMedia;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CNMedia/CNMedia-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -466,6 +594,7 @@
 		};
 		317C927E20DA531B00068FD5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 406EEE82FFBF6332C3E6C275 /* Pods-CNMediaTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -487,6 +616,7 @@
 		};
 		317C927F20DA531B00068FD5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2E2B87D2B7E5128CE2B52346 /* Pods-CNMediaTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
