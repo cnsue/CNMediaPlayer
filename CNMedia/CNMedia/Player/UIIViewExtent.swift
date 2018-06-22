@@ -29,3 +29,22 @@ extension UIView {
     }
     
 }
+
+extension UIView {
+    
+    //颜色渐变
+    func addGradientLayer(frame: CGRect, isTop: Bool) {
+        let colorA = UIColor(white: 0.0, alpha: 0.6).cgColor
+        let colorB = UIColor.clear.cgColor
+        
+        let gradientColors = isTop ? [colorA, colorB] : [colorB, colorA]
+        let gradientLocations: [NSNumber] = [0.0, 1.0]
+        
+        let gradientLayer: CAGradientLayer = CAGradientLayer()
+        gradientLayer.frame = frame
+        gradientLayer.colors = gradientColors
+        gradientLayer.locations = gradientLocations
+        self.layer.insertSublayer(gradientLayer, at: 0)
+    }
+    
+}
