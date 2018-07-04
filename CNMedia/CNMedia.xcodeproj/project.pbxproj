@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		081CE22020ECB9A500C932D0 /* CNPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081CE21F20ECB9A500C932D0 /* CNPlayer.swift */; };
 		085B014720DCE01400D55A43 /* CNPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085B014620DCE01400D55A43 /* CNPlayerView.swift */; };
 		085B014920DCE0BF00D55A43 /* CNPlayerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085B014820DCE0BF00D55A43 /* CNPlayerModel.swift */; };
 		085B014B20DCE18700D55A43 /* CNPlayerControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 085B014A20DCE18700D55A43 /* CNPlayerControlView.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		081CE21F20ECB9A500C932D0 /* CNPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNPlayer.swift; sourceTree = "<group>"; };
 		085B014620DCE01400D55A43 /* CNPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNPlayerView.swift; sourceTree = "<group>"; };
 		085B014820DCE0BF00D55A43 /* CNPlayerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNPlayerModel.swift; sourceTree = "<group>"; };
 		085B014A20DCE18700D55A43 /* CNPlayerControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CNPlayerControlView.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				085B014D20DCE32800D55A43 /* ASValuePopUpView.h */,
+				081CE21F20ECB9A500C932D0 /* CNPlayer.swift */,
 				085B014F20DCE32800D55A43 /* ASValuePopUpView.m */,
 				085B014E20DCE32800D55A43 /* ASValueTrackingSlider.h */,
 				085B014C20DCE32800D55A43 /* ASValueTrackingSlider.m */,
@@ -393,6 +396,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				081CE22020ECB9A500C932D0 /* CNPlayer.swift in Sources */,
 				0873D21520DA55A0001AABF6 /* UIIViewExtent.swift in Sources */,
 				085B015120DCE32800D55A43 /* ASValuePopUpView.m in Sources */,
 				085B014920DCE0BF00D55A43 /* CNPlayerModel.swift in Sources */,

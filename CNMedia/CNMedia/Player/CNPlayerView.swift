@@ -23,7 +23,7 @@ class CNPlayerView: UIView {
     // 是否已授权在非WiFi环境下播放视频
     static var canPlayWithoutWiFi: Bool = false
     // 播放属性
-    fileprivate var player: AVPlayer?
+    fileprivate var player: CNPlayer?
     fileprivate var urlAsset: AVURLAsset?
     // playerLayer
     fileprivate var playerLayer: AVPlayerLayer?
@@ -131,24 +131,7 @@ class CNPlayerView: UIView {
     open var playerItem: AVPlayerItem? {
         
         didSet {
-            if let oldItem = oldValue {
-                NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: oldItem)
-                oldItem.removeObserver(self, forKeyPath: "status")
-                oldItem.removeObserver(self, forKeyPath: "loadedTimeRanges")
-                oldItem.removeObserver(self, forKeyPath: "playbackBufferEmpty")
-                oldItem.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
-            }
-            
-            if let item = playerItem {
-                NotificationCenter.default.addObserver(self, selector: #selector(didPlayToEnd), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
-                
-                item.addObserver(self, forKeyPath: "status", options: .new, context: nil)
-                item.addObserver(self, forKeyPath: "loadedTimeRanges", options: .new, context: nil)
-                // 缓冲区空了，需要等待数据
-                item.addObserver(self, forKeyPath: "playbackBufferEmpty", options: .new, context: nil)
-                // 缓冲区有足够数据可以播放了
-                item.addObserver(self, forKeyPath: "playbackLikelyToKeepUp", options: .new, context: nil)
-            }
+            self.player?.replaceCurrentItem(with: playerItem)
         }
     }
     
@@ -250,7 +233,7 @@ class CNPlayerView: UIView {
         }
         
         // 每次都重新创建Player(替换replaceCurrentItemWithPlayerItem:，该方法阻塞线程)
-        self.player = AVPlayer(playerItem: self.playerItem)
+        self.player = CNPlayer(playerItem: self.playerItem)
         
         // 初始化playerLayer
         self.playerLayer = AVPlayerLayer(player: self.player)
@@ -304,15 +287,7 @@ class CNPlayerView: UIView {
     }
     
     deinit {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: playerItem)
-        self.playerItem?.removeObserver(self, forKeyPath: "status")
-        self.playerItem?.removeObserver(self, forKeyPath: "loadedTimeRanges")
-        self.playerItem?.removeObserver(self, forKeyPath: "playbackBufferEmpty")
-        self.playerItem?.removeObserver(self, forKeyPath: "playbackLikelyToKeepUp")
-        
         self.playerItem = nil
-      
-        
         // 移除通知
         NotificationCenter.default.removeObserver(self)
         UIDevice.current.endGeneratingDeviceOrientationNotifications()
@@ -327,96 +302,94 @@ class CNPlayerView: UIView {
 
 }
 
-extension CNPlayerView{
+extension CNPlayerView: CNPlayerDelegate{
     
     typealias completionHandler = ((Bool) -> Void)?
     
-    //MARK: KVO
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    
+    /** 获取视频总时长 */
+    func player(_ player: CNPlayer, itemTotal time: CMTime){
+        self.setNeedsLayout()
+        self.layoutIfNeeded()
         
-        if let item = object as? AVPlayerItem, let keyPath = keyPath {
-            guard item === self.player?.currentItem else {
-                return
-            }
+        // 添加playerLayer 到 self.layer
+        if let playerLayer = self.playerLayer {
+            self.layer.insertSublayer(playerLayer, at: 0)
+        }
+        
+        self.state = .playing
+        
+        // 加载完成后，再添加平移手势
+        // 添加平移手势，用来控制音量、亮度、快进快退
+        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panDirectionOnPlayerView))
+        panRecognizer.delegate = self
+        panRecognizer.maximumNumberOfTouches = 1
+        panRecognizer.delaysTouchesBegan = true
+        panRecognizer.delaysTouchesEnded = true
+        panRecognizer.cancelsTouchesInView = true
+        self.addGestureRecognizer(panRecognizer)
+        
+        // 跳到xx秒播放视频
+        if self.seekTime >= 0 {
+            self.seekToTime(dragedSeconds: self.seekTime, completionHandler: nil)
+        }
+        self.player?.isMuted = self.isMute
+    }
+    
+    /** 获取视频失败 */
+    func player(_ player: CNPlayer,  failure: Error){
+        self.state = .failed
+    }
+    
+    /** 播放器状态改变 */
+    func player(_ player: CNPlayer, isPlaying: Bool){
+        
+    }
+    
+    /** 视频播放结束 */
+    func player(_ player: AVPlayer, willEndPlayAt item: AVPlayerItem){
+        
+    }
+    
+    /** 已经加载的缓存 */
+    func player(_ player: AVPlayer, loadedCacheDuration duration: CMTime){
+        
+        // 计算缓冲进度
+        if let timeInterval = self.player?.availableDuration(),
+            let playerItem = self.playerItem {
             
-            switch keyPath {
-                
-            case "status":
-                if self.player?.currentItem?.status == .readyToPlay {
-                    self.setNeedsLayout()
-                    self.layoutIfNeeded()
-                    
-                    // 添加playerLayer 到 self.layer
-                    if let playerLayer = self.playerLayer {
-                        self.layer.insertSublayer(playerLayer, at: 0)
-                    }
-                    
-                    self.state = .playing
-                    
-                    // 加载完成后，再添加平移手势
-                    // 添加平移手势，用来控制音量、亮度、快进快退
-                    let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panDirectionOnPlayerView))
-                    panRecognizer.delegate = self
-                    panRecognizer.maximumNumberOfTouches = 1
-                    panRecognizer.delaysTouchesBegan = true
-                    panRecognizer.delaysTouchesEnded = true
-                    panRecognizer.cancelsTouchesInView = true
-                    self.addGestureRecognizer(panRecognizer)
-                    
-                    // 跳到xx秒播放视频
-                    if self.seekTime >= 0 {
-                        self.seekToTime(dragedSeconds: self.seekTime, completionHandler: nil)
-                    }
-                    self.player?.isMuted = self.isMute
-                    
-                } else if (self.player?.currentItem?.status == .failed) {
-                    self.state = .failed;
-                }
-                
-            case "loadedTimeRanges":
-                // 计算缓冲进度
-                if let timeInterval = self.availableDuration(),
-                    let playerItem = self.playerItem {
-                    
-                    let duration: CMTime = playerItem.duration
-                    let totalDuration: CGFloat = CGFloat(CMTimeGetSeconds(duration))
-                    //控制器view 状态变化  代码写
-                }
-                
-            case "playbackBufferEmpty":
-                // 当缓冲是空的时候
-                if (self.playerItem?.isPlaybackBufferEmpty)! {
-                    self.state = .buffering;
-                    //self.bufferingSomeSecond()
-                    
-                    if self.reachabilityStatus == .notReachable && self.isAllowPlay {
-                        self.playerControlState = .networkInterruption
-                        self.isAllowPlay = false
-                        self.pause()
-                        
-                    } else {
-                        self.bufferingSomeSecond()
-                        
-                    }
-                }
-                
-            case "playbackLikelyToKeepUp":
-                // 当缓冲好的时候
-                if ((self.playerItem?.isPlaybackLikelyToKeepUp)! && self.state == .buffering){
-                 
-                }
-                
-            default:
-                break
-            }
-            
-        } else if let item = object as? UITableView {
-         
-            
-          
+            let duration: CMTime = playerItem.duration
+            let totalDuration: CGFloat = CGFloat(CMTimeGetSeconds(duration))
+            //控制器view 状态变化  代码写
         }
     }
     
+    /** 当缓冲是空的时候 */
+    func player(_ player: AVPlayer,bufferEmpty: Bool){
+        // 当缓冲是空的时候
+        if (self.playerItem?.isPlaybackBufferEmpty)! {
+            self.state = .buffering;
+            //self.bufferingSomeSecond()
+            
+            if self.reachabilityStatus == .notReachable && self.isAllowPlay {
+                self.playerControlState = .networkInterruption
+                self.isAllowPlay = false
+                self.pause()
+                
+            } else {
+                self.bufferingSomeSecond()
+                
+            }
+        }
+    }
+    
+    /** 当缓冲好的时候 */
+    func player(_ player: AVPlayer,bufferSccuess: Bool){
+        // 当缓冲好的时候
+        if ((self.playerItem?.isPlaybackLikelyToKeepUp)! && self.state == .buffering){
+            
+        }
+    }
 }
 
 // MARK: 缓冲较差时候
@@ -454,24 +427,7 @@ extension CNPlayerView {
             }
         })
     }
-    
-    
-    /**
-     *  计算缓冲进度
-     *  @return 缓冲进度
-     */
-    func availableDuration() -> TimeInterval? {
-        if let loadedTimeRanges: [NSValue] = player?.currentItem?.loadedTimeRanges,
-            let first = loadedTimeRanges.first {
-            // 获取缓冲区域
-            let timeRange: CMTimeRange = first.timeRangeValue
-            let startSeconds = CMTimeGetSeconds(timeRange.start)
-            let durationSeconds = CMTimeGetSeconds(timeRange.duration)
-            let result = startSeconds + durationSeconds
-            return result
-        }
-        return nil
-    }
+
 }
 
 extension CNPlayerView{
@@ -604,10 +560,7 @@ extension CNPlayerView{
 }
 
 extension CNPlayerView{
-    /// 播放结束
-    @objc func didPlayToEnd(notification: Notification) {
-   
-    }
+  
     
     /// 播放
     func play() {
