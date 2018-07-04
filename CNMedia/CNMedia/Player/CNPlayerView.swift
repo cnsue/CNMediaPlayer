@@ -12,6 +12,13 @@ import MediaPlayer
 import Alamofire
 import SnapKit
 
+public enum Orientation: Int {
+    /** 横屏 */
+    case horizontal
+    /** 竖屏 */
+    case vertical
+}
+
 class CNPlayerView: UIView {
     // 是否已授权在非WiFi环境下播放视频
     static var canPlayWithoutWiFi: Bool = false
@@ -53,6 +60,8 @@ class CNPlayerView: UIView {
     var isLocalVideo: Bool = false
     
     var videoURL: URL?
+    
+    final var verticalFrame: CGRect!
     
     var reachabilityStatus: NetworkReachabilityManager.NetworkReachabilityStatus = .unknown {
         
@@ -174,24 +183,22 @@ class CNPlayerView: UIView {
         }
     }
     
-    var model: CNPlayerModel? {
-        didSet{
-            if let aModel = model {
-                
-            }
-        }
-    }
+//    var model: CNPlayerModel? {
+//        didSet{
+//            if let aModel = model {
+//
+//            }
+//        }
+//    }
     
     
     // MARK: - 初始化
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configPlayer()
+//        configPlayer()
         
         let defaultControlView = CNPlayerControlView()
         self.plyControlView = defaultControlView
-        
-    
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -199,6 +206,15 @@ class CNPlayerView: UIView {
 //        configPlayer()
         
     }
+    // 指定初始化方法，必须指定播放model 开初始化相应资源
+    public convenience init(playerModel:CNPlayerModel) {
+        self.init(frame: .zero)
+        
+        self.videoURL = playerModel.videoURL
+        configPlayer()
+    }
+    
+    
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -211,6 +227,13 @@ class CNPlayerView: UIView {
         if let playerLayer = self.playerLayer {
             self.layer.insertSublayer(playerLayer, at: 0)
         }
+    }
+
+    override func draw(_ rect: CGRect) {
+        super .draw(rect)
+        verticalFrame = frame
+        
+        addNotificationCenter()
     }
     
     /// 设置Player相关参数
@@ -256,8 +279,28 @@ class CNPlayerView: UIView {
         
         // 开始播放
         self.isAllowPlay = true
-        self.play()
+//        self.play()
+        self.player?.rate = 1.0
         self.isPauseByUser = false
+    }
+    
+    
+    
+    fileprivate func setupFrame(_ orientation: Orientation) {
+        if orientation == .horizontal {
+            // 横屏
+            snp.remakeConstraints({ (make) in
+                make.edges.equalTo(superview!)
+            })
+        } else {
+            // 竖屏
+            snp.remakeConstraints({ (make) in
+                make.left.equalTo(verticalFrame.minX)
+                make.top.equalTo(verticalFrame.minY)
+                make.width.equalTo(verticalFrame.width)
+                make.height.equalTo(verticalFrame.height)
+            })
+        }
     }
     
     deinit {
@@ -568,7 +611,7 @@ extension CNPlayerView{
     
     /// 播放
     func play() {
-        
+        self.player?.play()
     }
     
     /// 暂停
@@ -576,7 +619,7 @@ extension CNPlayerView{
         guard (self.plyControlView != nil && self.player != nil) else {
             return
         }
-        
+        self.player?.pause()
     }
     
     
@@ -765,4 +808,27 @@ extension CNPlayerView: UIGestureRecognizerDelegate {
         return true
     }
     
+}
+
+extension CNPlayerView {
+    
+    fileprivate func addNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(orientation), name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    fileprivate func removeNotificationCenter() {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIDeviceOrientationDidChange, object: nil)
+    }
+    
+    // 处理旋转过程中需要的操作
+    @objc func orientation(notification: NSNotification) {
+        let orientation = UIDevice.current.orientation
+        if orientation.isLandscape {
+            // 屏幕水平
+            setupFrame(.horizontal)
+        } else if orientation.isPortrait {
+            // 屏幕竖直
+            setupFrame(.vertical)
+        }
+    }
 }

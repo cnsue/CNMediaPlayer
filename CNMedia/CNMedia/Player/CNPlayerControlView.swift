@@ -15,8 +15,6 @@ class CNPlayerControlView: UIView {
     var bottomToolBarView = UIView()
     var bottomToolBarBg = UIView()
     
-    // 滑杆
-    var videoSlider = ASValueTrackingSlider()
     // 是否拖拽slider控制播放进度
     var isDragged: Bool = false
     
@@ -53,6 +51,63 @@ class CNPlayerControlView: UIView {
         
         self.bottomToolBarView.addSubview(self.bottomToolBarBg)
         
+
+        self.bottomToolBarView.addSubview(self.videoSlider)
+//        self.bottomToolBarView.backgroundColor = UIColor.yellow
+//        self.backgroundColor = UIColor.orange
+        
+        self.bottomToolBarView.addSubview(self.playBtn)
+        self.bottomToolBarView.addSubview(self.fullScreenBtn)
+        self.addSubview(self.lockScreenBtn)
+    }
+    
+    // 添加子控件的约束
+    func makeSubViewsConstraints(){
+        self.bottomToolBarView.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalTo(self)
+            make.height.equalTo(44)
+        }
+        
+        playBtn.snp.makeConstraints { (make) in
+            make.top.bottom.equalTo(bottomToolBarView)
+            make.left.equalTo(self)
+            make.width.equalTo(40)
+        }
+        
+        self.videoSlider.snp.makeConstraints { (make) in
+            make.top.bottom.equalTo(bottomToolBarView)
+            make.left.equalTo(playBtn.snp.right).offset(10)
+            make.right.equalTo(fullScreenBtn.snp.left).offset(-10)
+        }
+        
+        fullScreenBtn.snp.makeConstraints { (make) in
+            make.top.bottom.equalTo(bottomToolBarView)
+            make.right.equalTo(self)
+            make.width.equalTo(40)
+        }
+        
+        lockScreenBtn.snp.makeConstraints { (make) in
+            make.centerY.equalTo(self)
+            make.left.equalTo(self).offset(10)
+            make.size.equalTo(35)
+        }
+        
+    }
+    
+    fileprivate func addKVO(){
+        // app退到后台
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
+        
+        // app进入前台
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterPlayground), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
+        
+        self.listeningRotating()
+        self.onDeviceOrientationChange()
+    }
+    
+    // 滑动条
+    lazy var videoSlider: ASValueTrackingSlider = {
+        let videoSlider = ASValueTrackingSlider()
         videoSlider.popUpViewCornerRadius = 0.0;
         videoSlider.popUpViewColor = UIColor(red: 19, green: 19, blue: 9, alpha: 1)
         //rgba(19, 19, 9, 1)
@@ -78,38 +133,73 @@ class CNPlayerControlView: UIView {
         panRecognizer.delaysTouchesEnded = true
         panRecognizer.cancelsTouchesInView = true
         videoSlider.addGestureRecognizer(panRecognizer)
-        self.bottomToolBarView.addSubview(self.videoSlider)
-//        self.bottomToolBarView.backgroundColor = UIColor.yellow
-//        self.backgroundColor = UIColor.orange
-    }
+        
+        return videoSlider
+    }()
     
-    // 添加子控件的约束
-    func makeSubViewsConstraints(){
-        self.bottomToolBarView.snp.makeConstraints { (make) in
-            make.left.right.bottom.equalTo(self)
-            make.height.equalTo(44)
+    // 开始暂停按钮
+    lazy var playBtn: UIButton = {
+        let playBtn = UIButton.init(type: .custom)
+        playBtn.setImage(UIImage.init(named: "play"), for: .normal)
+        playBtn.setImage(UIImage.init(named: "stop"), for: .selected)
+        playBtn.isSelected = false
+        playBtn.addTarget(self, action: #selector(playAction(sender:)), for: .touchUpInside)
+        
+        return playBtn
+    }()
+    // 全屏按钮
+    lazy var fullScreenBtn: UIButton = {
+        let fullScreenBtn = UIButton(type: .custom)
+        fullScreenBtn.setImage(UIImage.init(named: "full_screen"), for: .normal)
+        fullScreenBtn.setImage(UIImage.init(named: "exit_screen"), for: .selected)
+        fullScreenBtn.isSelected = false
+        fullScreenBtn.addTarget(self, action: #selector(fullScreenAction(sender:)), for: .touchUpInside)
+        return fullScreenBtn
+    }()
+    
+    // 锁屏按钮
+    lazy var lockScreenBtn: UIButton = {
+        let lockScreenBtn = UIButton(type: .custom)
+        lockScreenBtn.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        lockScreenBtn.layer.cornerRadius = 17.5
+        lockScreenBtn.setImage(UIImage.init(named: "lock"), for: .selected)
+        lockScreenBtn.setImage(UIImage.init(named: "unlock"), for: .normal)
+        lockScreenBtn.addTarget(self, action: #selector(lockScreenAction(sender:)), for: .touchUpInside)
+        return lockScreenBtn
+    }()
+    
+    /// 播放和暂停按钮点击事件
+    @objc func playAction(sender: UIButton) {
+        if sender.isSelected {
+            sender.isSelected = false
         }
-        
-        self.videoSlider.snp.makeConstraints { (make) in
-            make.left.equalTo(15)
-            make.right.equalTo(-15)
-            make.centerY.equalToSuperview()
-            make.height.equalTo(30)
+        else
+        {
+            sender.isSelected = true
         }
-        
     }
     
-    fileprivate func addKVO(){
-        // app退到后台
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: Notification.Name.UIApplicationWillResignActive, object: nil)
-        
-        // app进入前台
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterPlayground), name: Notification.Name.UIApplicationDidBecomeActive, object: nil)
-        
-        self.listeningRotating()
-        self.onDeviceOrientationChange()
+    /// 全屏按钮点击事件
+    @objc func fullScreenAction(sender: UIButton) {
+        if sender.isSelected {
+            sender.isSelected = false
+        }
+        else
+        {
+            sender.isSelected = true
+        }
     }
     
+    /// 锁屏按钮点击事件
+    @objc func lockScreenAction(sender: UIButton) {
+        if sender.isSelected {
+            sender.isSelected = false
+        }
+        else
+        {
+            sender.isSelected = true
+        }
+    }
 }
 
 extension CNPlayerControlView{

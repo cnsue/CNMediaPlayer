@@ -14,10 +14,42 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let vies = CNPlayerView.init(frame: CGRect.init(x: 0, y: 0, width: CNConstant.screenWidth, height: CNConstant.Height.banner))
+        view.addSubview(playerView)
         
-        self.view.addSubview(vies)
+        playerView.snp.makeConstraints { (make) in
+            make.top.equalTo(view).offset(100)
+            make.left.right.equalTo(view)
+            make.height.equalTo(playerView.snp.width).multipliedBy(9.0/16.0).priority(750)
+        }
+    }
+    
+    lazy var playerView: CNPlayerView = {
+       
+        let playerView = CNPlayerView(playerModel: self.playerModel)
         
+        return playerView
+    }()
+    
+    lazy var playerModel:CNPlayerModel = {
+        let playerModel = CNPlayerModel()
+        let path = Bundle.main.path(forResource: "Thor", ofType: ".mp4")
+        let url = URL(fileURLWithPath: path!)
+        
+        playerModel.videoURL = url
+        playerModel.title = "Thor"
+        
+        return playerModel
+        
+    }()
+    
+    @IBAction func play(_ sender: Any)
+    {
+        playerView.play()
+    }
+    
+    @IBAction func stop(_ sender: Any)
+    {
+        playerView.pause()
     }
 
     override func didReceiveMemoryWarning() {
