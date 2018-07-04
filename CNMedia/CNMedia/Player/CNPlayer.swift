@@ -42,6 +42,8 @@ class CNPlayer: AVPlayer{
         
         removeObserverItem(with: currentItem)
         removeNotificationItem(with: currentItem)
+        
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.AVAudioSessionRouteChange, object: nil)
         debugPrint("---LYPlayer结束了---")
     }
     
@@ -210,12 +212,18 @@ extension CNPlayer {
         
         // 添加视频异常中断通知
         NotificationCenter.default.addObserver(self, selector: #selector(playbackStalled_notification), name: Notification.Name.AVPlayerItemPlaybackStalled, object: item)
+        
+        // 监听耳机插入和拔掉通知
+        NotificationCenter.default.addObserver(self, selector: #selector(audioRouteChangeListenerCallback), name:
+            Notification.Name.AVAudioSessionRouteChange, object: nil)
+        
     }
     
     // 移除播放项目通知
     fileprivate func removeNotificationItem(with item: AVPlayerItem?) {
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemDidPlayToEndTime, object: item)
         NotificationCenter.default.removeObserver(self, name: Notification.Name.AVPlayerItemPlaybackStalled, object: item)
+        
     }
 }
 
@@ -235,6 +243,39 @@ extension CNPlayer {
     // 视频异常中断
     @objc func playbackStalled_notification() {
         debugPrint("异常中断")
+    }
+    
+    /// 耳机插入、拔出事件
+    @objc func audioRouteChangeListenerCallback(_ notification: Notification) {
+        
+        guard let interuptionDic = notification.userInfo as? [String: AnyObject] else {
+            return
+        }
+        
+        guard  let routeChangeReason: AVAudioSessionRouteChangeReason = interuptionDic[AVAudioSessionRouteChangeReasonKey] as? AVAudioSessionRouteChangeReason else {
+            
+            return
+        }
+        
+        
+        switch (routeChangeReason) {
+            
+        case .newDeviceAvailable:
+            // 耳机插入
+            print("newDeviceAvailable")
+            
+        case .oldDeviceUnavailable:
+            // 耳机拔掉
+            // 拔掉耳机继续播放
+            self.play()
+            
+        case .categoryChange:
+            // called at start - also when other audio wants to play
+            print("AVAudioSessionRouteChangeReasonCategoryChange")
+            
+        default:
+            break
+        }
     }
     
 }

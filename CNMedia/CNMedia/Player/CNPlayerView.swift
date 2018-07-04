@@ -480,49 +480,9 @@ extension CNPlayerView{
         } catch let error as NSError {
             print(error.code)
         }
-        
-        // 监听耳机插入和拔掉通知
-        NotificationCenter.default.addObserver(self, selector: #selector(audioRouteChangeListenerCallback), name:
-            Notification.Name.AVAudioSessionRouteChange, object: nil)
-        
+
     }
-    
-    
-    /// 耳机插入、拔出事件
-    @objc func audioRouteChangeListenerCallback(_ notification: Notification) {
-        
-        guard let interuptionDic = notification.userInfo as? [String: AnyObject] else {
-            return
-        }
-        
-        guard  let routeChangeReason: AVAudioSessionRouteChangeReason = interuptionDic[AVAudioSessionRouteChangeReasonKey] as? AVAudioSessionRouteChangeReason else {
-            
-            return
-        }
-        
-        
-        switch (routeChangeReason) {
-            
-        case .newDeviceAvailable:
-            // 耳机插入
-            print("newDeviceAvailable")
-            
-        case .oldDeviceUnavailable:
-            // 耳机拔掉
-            // 拔掉耳机继续播放
-            self.play()
-            
-        case .categoryChange:
-            // called at start - also when other audio wants to play
-            print("AVAudioSessionRouteChangeReasonCategoryChange")
-            
-        default:
-            break
-        }
-    }
-    
-    
-    
+
     /**
      *  从xx秒开始播放视频跳转
      *
